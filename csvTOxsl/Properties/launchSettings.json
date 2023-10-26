@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "csvTOxsl": {
+      "commandName": "Project",
+      "commandLineArgs": "origen=tabla.csv plantilla=plantilla.xlsx celdadestino=a4"
+    }
+  }
+}
