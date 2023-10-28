@@ -1,7 +1,7 @@
 # csvTOexcel v1.0
 ## Programa para generar un fichero Excel a partir de un CSV
 
-### Desarrollado por Carlos Clemente (09-2023)
+### Desarrollado por Carlos Clemente (10-2023)
 
 Instrucciones:
 - Permite generar un libro de Excel a partir de un fichero CSV
