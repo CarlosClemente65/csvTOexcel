@@ -2,7 +2,7 @@
   "profiles": {
     "csvTOxsl": {
       "commandName": "Project",
-      "commandLineArgs": "origen=tabla.csv plantilla=plantilla.xlsx celdadestino=a4"
+      "commandLineArgs": "entrada=tabla.csv salida=resultado.xlsx plantilla=plantilla.xlsx celda=a4 hoja=4"
     }
   }
 }
