@@ -4,8 +4,7 @@ using ClosedXML.Excel;
 
 namespace csvTOxlsx
 {
-
-    public class metodosLista
+    public class metodos
     {
         //Metodo para leer el CSV creando una lista de objetos que almacenara las lineas y dentro otra lista de objetos con cada uno de los campos
         public List<List<object>> leerCSV(string archivoCSV)
@@ -71,7 +70,7 @@ namespace csvTOxlsx
             using (FileStream file = new(nombreFichero, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 //Creacion del libro y hoja
-                XLWorkbook workbook = new XLWorkbook();
+                XLWorkbook workbook;
                 IXLWorksheet worksheet;
                 try
                 {
@@ -111,7 +110,7 @@ namespace csvTOxlsx
                                 if (contenidoCeldaStr.StartsWith("#F#")) //Verificamos si comienza con "#F#"
                                 {
                                     esFormula = true;
-                                    contenidoCelda = contenidoCeldaStr.Substring(3, contenidoCeldaStr.Length - 3);//Dejamos la formula sin la cadena de identificacion para poder tratarla
+                                    contenidoCelda = contenidoCeldaStr[3..];//Quitamos los 3 primeros caracteres y dejamos la formula sin la cadena de identificacion para poder tratarla
                                 }
                             }
 
@@ -130,12 +129,11 @@ namespace csvTOxlsx
                                 else if (contenidoCelda is float) //Decimal
                                 {
                                     cell.Value = Math.Round((float)contenidoCelda, 2); //Se redondea a 2 decimales porque en la conversion de string a float se crean muchos decimales
-                                    cell.Style.NumberFormat.Format = "#,##0.00";
+                                    cell.Style.NumberFormat.Format = "#,##0.00";//Se aplica el formato con 2 decimales
                                 }
                                 else if (contenidoCelda is DateTime) //Fecha
                                 {
                                     cell.Value = (DateTime)contenidoCelda;
-
                                     // Aplicar formato personalizado para mostrar solo la fecha
                                     cell.Style.NumberFormat.Format = "dd.mm.yyyy";
                                 }
@@ -156,6 +154,7 @@ namespace csvTOxlsx
                 }
 
 
+                //Grabacion del fichero de salida
                 using (FileStream fileOut = new(ficheroExcel, FileMode.Create))
                 {
                     try

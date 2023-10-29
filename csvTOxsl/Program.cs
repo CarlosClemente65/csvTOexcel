@@ -4,10 +4,10 @@
     {
         static void Main(string[] args)
         {
-            //Permite ejecutar los metodos como DataTable o como lista (la lista funciona)
+            //Crea instancia para usar los metodos
+            metodos metodo = new();
 
-            metodosLista metodoL = new();
-
+            //Asingacion de variables
             string ficheroCsv = string.Empty;
             string ficheroExcel = string.Empty;
             string plantillaExcel = string.Empty;
@@ -17,6 +17,7 @@
             int columna = 1;
             string textoLog = string.Empty;
 
+            //Procesado de argumentos
             foreach (string arg in args)
             {
                 if (arg == "-h")
@@ -46,7 +47,7 @@
 
                         case "celda":
                             celdaDestino = value.ToUpper();
-                            int[] columnaFila = metodoL.convertirReferencia(celdaDestino);
+                            int[] columnaFila = metodo.convertirReferencia(celdaDestino);
                             fila = columnaFila[1];
                             columna = columnaFila[0];
                             break;
@@ -61,12 +62,12 @@
             //Comprueba que se han pasado como parametro el fichero csv y el nombre del fichero de salida (la plantilla es opcional)
             if (string.IsNullOrEmpty(ficheroCsv) && string.IsNullOrEmpty(ficheroExcel))
             {
-                textoLog += "Parametros incorrectos.\n";
+                textoLog += "Parametros incorrectos. No se ha informado del fichero CSV o el fichero de salida.\n";
                 grabaResultado(textoLog);
                 return;
             }
 
-            if (hoja < 0)
+            if (hoja < 1)
             {
                 textoLog += "El numero de hoja no puede ser menor de 1";
                 grabaResultado(textoLog);
@@ -76,9 +77,9 @@
             {
                 try
                 {
-                    List<List<object>> datos = metodoL.leerCSV(ficheroCsv); //Leer el archivo CSV
-                    textoLog += metodoL.exportaXLSX(datos, plantillaExcel, fila, columna, hoja, ficheroExcel); //Grabar el fichero Excel
-                    grabaResultado(textoLog);
+                    List<List<object>> datos = metodo.leerCSV(ficheroCsv); //Leer el archivo CSV
+                    textoLog += metodo.exportaXLSX(datos, plantillaExcel, fila, columna, hoja, ficheroExcel); //Grabar el fichero Excel
+                    //grabaResultado(textoLog);
                 }
                 catch (Exception ex)
                 {
